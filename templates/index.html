@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Harvest</title>
+    <link href="../static/style.css" ref="stylesheet">
+</head>
+<body>
+<div>
+    <h1>Smart Harvest Xpert</h1>
+    <a href="./about">About Project</a>
+</div> 
+<div class="container">   
+        
+        <div class="price">
+            <div>
+                <h3>Predict the market trend of the crops</h3>
+            </div>
+            <div>
+                <label for="plantationDate">Plantation Date</label>
+                <input type="date" id="plantationDate" name="plantationDate">
+            </div>
+            <div>
+                <label for="crop">Crop</label>
+                <select id="crop" name="crop">
+                    <option value="SELECT">SELECT</option>
+                    <option value="tomato">Tomato</option>
+                    <option value="onion">Onion</option>
+                    <option value="Potato">Potato</option>
+                </select>
+            </div>
+    
+            <div>
+            <button class="btn" id="predict" onclick="">Predict</button>
+            
+            </div>
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Crop</th>
+                            <th>Crop_Type</th>
+                            <th>Model</th>
+                            <th>Price/Kg</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-price">
+                    
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="iot">
+            <div>
+                <div>
+                    <h3>Real-Time Data for IOT devices</h3>
+                </div>
+                <div>
+                    <label for="harvestDate">Harvest Date</label>
+                    <input type="date" id="harvestDate" name="harvestDate">
+                </div>
+                <div>
+                <button class="btn" id="getdata">Get Data</button>
+                </div>
+                
+                <div>
+                    <button class="btn" onclick="window.location.href='/live'">Real Time IOT</button>
+                    </div>
+            </div>
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Temperature</th>
+                            <th>Humidity</th>
+                            <th>CO2</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-iot">
+                    
+                    </tbody>
+                </table>
+            </div>
+        </div>
+</div>
+    
+    
+    <script src="../static/main.js"> </script>
+</body>
+</html>

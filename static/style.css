@@ -1,0 +1,47 @@
+body{
+    text-align: center;
+}
+.container {
+    text-align: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    height: 100vh; 
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: small;
+    text-align: left;
+}
+th, td {
+    border: 1px solid black;
+    padding: 10px;
+}
+th {
+    background-color: #feffc2;
+    color: rgb(0, 0, 0);
+}
+tr:nth-child(even) {
+    background-color: #f4f4f4;
+}
+
+.btn{
+    color: rgb(0, 0, 0);
+    background-color: rgb(117, 181, 255);
+    padding: 5px 5px;
+    font-size: large;
+    margin-top: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    width:150px;
+}
+.price{
+    margin: 30px 30px;
+}
+.iot{
+    margin: 30px 30px;
+}
+input{
+    margin-bottom: 20px;
+}
