@@ -82,17 +82,21 @@ function populate_iot(){
     const payload ={
         features:[plantationDateInput,cropInput,harvestDateInput]
     }
-    fetch('/predictIOT', {
+    fetch('http://127.0.0.1:5000/predictTrend', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
-        }
-    }).then(
-        response=>response.json()
-    ).then(response=>{
-        console.log(response.message);
-    }
-    )
+        },
+        body: JSON.stringify({
+            features: [2025, 5, 1, 2, 0, 1, 0, 1]  // Example features array
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+    })
+    .catch(err => console.error(err));
+    
     // iot_data.forEach(item => {
     //     let row = `<tr>
     //         <td>${item.date}</td>
