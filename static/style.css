@@ -1,29 +1,47 @@
-body{
-    text-align: center;
+body {
+  background-color: #ffffff; /* light Bootstrap background */
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
 }
-.container {
-    text-align: center;
-    display: grid;
-    grid-template-columns: 1fr 1fr; 
-    height: 100vh; 
+/* Modern Navbar Styling */
+.modern-navbar {
+  background: linear-gradient(to right, #67a6f2, #70b9fc);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-radius: 0 0 16px 16px;
 }
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    font-size: small;
-    text-align: left;
+
+.navbar-brand {
+  font-size: 1.6rem;
+  color: #ffffff !important;
+  transition: transform 0.2s ease;
 }
-th, td {
-    border: 1px solid black;
-    padding: 10px;
+
+.navbar-brand:hover {
+  transform: scale(1.05);
 }
-th {
-    background-color: #feffc2;
-    color: rgb(0, 0, 0);
+
+.navbar-nav .nav-link {
+  color: #f1f1f1 !important;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  transition: color 0.3s ease, border-bottom 0.3s ease;
+  border-bottom: 2px solid transparent;
 }
-tr:nth-child(even) {
-    background-color: #f4f4f4;
+
+.navbar-nav .nav-link:hover {
+  color: #000000 !important; /* gold on hover */
+  border-bottom: 2px solid #000000;
+}
+
+.section {
+  background-color: rgb(255, 255, 255);
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  margin-bottom: 2rem;
 }
 
 .btn{
@@ -44,4 +62,30 @@ tr:nth-child(even) {
 }
 input{
     margin-bottom: 20px;
+}
+.lcd-box {
+    background-color: #212529; /* dark grey (Bootstrap's dark background) */
+    border: 1px solid #28a745; /* Bootstrap green */
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 600px;
+    margin: auto;
+    font-family: monospace;
+    color: #28a745;
+}
+
+.lcd-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.lcd-data {
+    font-size: 1rem;
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px dashed #28a745;
+    padding-bottom: 4px;
 }

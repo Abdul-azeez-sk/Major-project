@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart Harvest</title>
+  <link href="../static/style.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body style="background-color: rgb(238, 238, 238);">
+    <nav class="navbar navbar-expand-lg modern-navbar">
+      <div class="container">
+        <!-- Brand -->
+        <a class="navbar-brand d-flex align-items-center fw-bold text-light" href="#">
+          <img src="../static/leaf.png" alt="Logo" width="40" height="40" class="me-2">
+          Smart Harvest
+        </a>
+
+        <!-- Toggler (for mobile) -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                  <img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMzAgMzAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIGQ9Ik00IDdoMjJNMCAxNWgyMk0gNCAyM2gyMiIvPjwvc3ZnPg==" alt="Toggle menu" style="width:30px; height:30px;">
+        </button>
+
+        <!-- Navbar Links -->
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link text-light fw-semibold" href="./">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-light fw-semibold" href="./iot">IoT</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-light fw-semibold" href="./about">About Project</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-light fw-semibold" href="./live">Live Demo</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    {% block content %}
+        Default content
+    {% endblock %}
+
+    <script src="../static/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,113 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IoT Device Data Display</title>
-    <style>
-        body {
-            font-family: 'Courier New', Courier, monospace;
-            background-color: #222;
-            color: #00FF00;
-            text-align: center;
-            padding: 50px;
-        }
+{% extends "base.html" %}
 
-        .lcd {
-            width: 350px;
-            height: 200px;
-            background-color: #000;
-            border: 2px solid #00FF00;
-            border-radius: 10px;
-            padding: 10px;
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
-            margin: 0 auto;
-            overflow: hidden;
-        }
+{% block content %}
+<div class="container mt-5">
+  <div class="section text-center">
+    <h3 class="mb-4">IoT Device LCD Monitor</h3>
 
-        .lcd-header {
-            font-size: 20px;
-            font-weight: bold;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-        }
+    <div class="lcd-box">
+      <div class="lcd-title"></div>
 
-        .lcd-data {
-            font-size: 18px;
-            margin: 5px 0;
-        }
-
-        .lcd-data span {
-            font-weight: bold;
-        }
-
-        .btn {
-            background-color: #00FF00;
-            color: #222;
-            border: none;
-            padding: 10px 20px;
-            font-size: 18px;
-            cursor: pointer;
-            margin-top: 20px;
-            border-radius: 5px;
-        }
-
-        .btn:hover {
-            background-color: #00CC00;
-        }
-    </style>
-</head>
-<body>
-    <h1>IoT Device Data Display</h1>
-
-    <!-- LCD Display Container -->
-    <div class="lcd">
-        <div class="lcd-header">Real-Time IoT Data</div>
-        <div class="lcd-data">
-            <span>Date:</span> <span id="date">2025-02-25</span>
-        </div>
-        <div class="lcd-data">
-            <span>Time:</span> <span id="time">00:00 - 4:00</span>
-        </div>
-        <div class="lcd-data">
-            <span>Temperature:</span> <span id="temperature">25°C</span>
-        </div>
-        <div class="lcd-data">
-            <span>Humidity:</span> <span id="humidity">70%</span>
-        </div>
-        <div class="lcd-data">
-            <span>CO2:</span> <span id="co2">60 ppm</span>
-        </div>
+      <div class="lcd-data">
+        <span><strong>Date:</strong></span>
+        <span id="date">2025-02-25</span>
+      </div>
+      <div class="lcd-data">
+        <span><strong>Time:</strong></span>
+        <span id="time">00:00 - 4:00</span>
+      </div>
+      <div class="lcd-data">
+        <span><strong>Temperature:</strong></span>
+        <span id="temperature">25°C</span>
+      </div>
+      <div class="lcd-data">
+        <span><strong>Humidity:</strong></span>
+        <span id="humidity">70%</span>
+      </div>
+      <div class="lcd-data">
+        <span><strong>CO₂:</strong></span>
+        <span id="co2">60 ppm</span>
+      </div>
     </div>
 
-    <!-- Button to update data (simulating real-time updates) -->
-    <button class="btn" onclick="updateData()">Update Real-Time Data</button>
-
-    <script>
-        // Simulating real-time IoT data (this would usually come from an IoT device)
-        const iot_data = [
-            { date: "2025-02-25", time: "00:00 - 4:00", temperature: "25°C", humidity: "70%", co2: "60 ppm" },
-            { date: "2025-02-25", time: "04:00 - 8:00", temperature: "27°C", humidity: "65%", co2: "55 ppm" },
-            { date: "2025-02-25", time: "08:00 - 12:00", temperature: "30°C", humidity: "60%", co2: "50 ppm" },
-            { date: "2025-02-26", time: "00:00 - 10:00", temperature: "22°C", humidity: "75%", co2: "65 ppm" }
-        ];
-
-        let dataIndex = 0; // Initial data index for displaying data
-
-        // Function to update the display with new data
-        function updateData() {
-            const data = iot_data[dataIndex];
-
-            // Update the content of the LCD display
-            document.getElementById("date").innerText = data.date;
-            document.getElementById("time").innerText = data.time;
-            document.getElementById("temperature").innerText = data.temperature;
-            document.getElementById("humidity").innerText = data.humidity;
-            document.getElementById("co2").innerText = data.co2;
-
-            // Move to the next data in the array
-            dataIndex = (dataIndex + 1) % iot_data.length; // Loop back to start
-        }
-    </script>
-</body>
-</html>
+    <button class="btn  btn-primary" onclick="updateData()">Update Real-Time Data</button>
+  </div>
+</div>
+{% endblock %}
