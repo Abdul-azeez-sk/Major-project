@@ -17,3 +17,22 @@ function updateData() {
 
   dataIndex = (dataIndex + 1) % iot_data.length;
 }
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    setTimeout(function () {
+      const $table = $("table.iot-table");
+      if ($table.length) {
+        $table.addClass("table table-bordered table-hover table-striped");
+        $table.DataTable({
+          pageLength: 5,
+          lengthMenu: [5, 10, 25, 50, 100],
+          language: {
+            search: "_INPUT_",
+            searchPlaceholder: "Search records..."
+          }
+        });
+      }
+    }, 100); 
+  });
+  

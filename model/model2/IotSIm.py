@@ -41,19 +41,3 @@ def generate_hourly_data(seeding_date, harvesting_date, crop_id):
             })
 
     return pd.DataFrame(records)
-
-# --- Main block: Generate dataset for multiple crops ---
-crop_cycles = [
-    {"Seeding_Date": "2025-01-01", "Harvesting_Date": "2025-03-25", "Crop_ID": "T001"},
-    {"Seeding_Date": "2025-02-15", "Harvesting_Date": "2025-05-10", "Crop_ID": "T002"},
-]
-
-all_data = pd.DataFrame()
-
-for cycle in crop_cycles:
-    df = generate_hourly_data(cycle["Seeding_Date"], cycle["Harvesting_Date"], cycle["Crop_ID"])
-    all_data = pd.concat([all_data, df], ignore_index=True)
-
-# --- Save to CSV ---
-all_data.to_csv("tomato_greenhouse_hourly_data.csv", index=False)
-print("✅ Dataset saved as 'tomato_greenhouse_hourly_data.csv'")
