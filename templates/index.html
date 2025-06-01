@@ -2,35 +2,67 @@
 
 {% block content %}   
 
-<div class="container py-5">
+<div class="container mt-5">
   <div class="row justify-content-center">
-    <div class="col-md-8">
-      <div class="card shadow-sm border-0">
+    <div class="col-md-12">
+      <div class="card  shadow-sm border-0">
         <div class="card-header ">
-          <h4 class="mb-0 text-outline-primary">Tomato Price Prediction</h4>
+          <h4 class="mb-0 ">Tomato Price Prediction</h4>
         </div>
-        <div class="card-body">
+        <div class="card-body ">
           <form method="post" action="/predict">
-            <div class="mb-3 w-50">
-              <label for="seeding_date" class="form-label">Start Date</label>
-              <input type="date" class="form-control" id="start_date" name="start_date" required>
-            </div>
+            <div class="row mt-3">
+              <div class="mb-3 col-md-6">
+                <label for="start_date" class="form-label"> Prediction Start</label>
+                <input type="date" class="form-control" id="start_date" name="start_date" required>
+              </div>
 
-            <div class="mb-3 w-50">
-              <label for="harvesting_date" class="form-label">End Date</label>
-              <input type="date" class="form-control" id="End_date" name="End_date" required>
+              <div class="mb-3 col-md-6">
+                <label for="stop_date" class="form-label"> Prediction Stop</label>
+                <input type="date" class="form-control" id="stop_date" name="stop_date" required>
+              </div>
             </div>
 
             <div class="mb-3">
-                <label for="crop_id" class="form-label">Crop Type</label>
-                <select class="form-control" id="crop_id" name="crop_id" required>
-                    <option value="">Select a crop</option>
-                    <option value="1">Tomato Common </option>
-                    <option value="2">Tomato Desi</option>
-                    <option value="3">Tomato B1</option>
-                </select>
+              <label for="CommName" class="form-label">Crop Type</label>
+              <select class="form-control" id="CommName" name="CommName" required>
+                  <option value="">Select a Crop</option>
+                  {% for crop in crops %}
+                      <option value="{{ crop.id }}">{{ crop.name }}</option>
+                  {% endfor %}
+              </select>
             </div>
-
+            <div class="mb-3">
+              <label for="VarityName" class="form-label">Variety</label>
+              <select class="form-control" id="VarityName" name="VarityName" required>
+                  <option value="">Select a variety</option>
+                  {% for variety in varieties %}
+                      <option value="{{ variety.id }}">{{ variety.name }}</option>
+                  {% endfor %}
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="AmcName" class="form-label">Amc Name</label>
+              <select class="form-control" id="AmcName" name="AmcName" required>
+                  <option value="">Select a Amc</option>
+                  {% for amcname in amcnames %}
+                      <option value="{{ amcname.id }}">{{ amcname.name }}</option>
+                  {% endfor %}
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="YardName" class="form-label">Yard Name</label>
+              <select class="form-control" id="YardName" name="YardName" required>
+                  <option value="">Select a Yard</option>
+                  {% for yardname in yardnames %}
+                      <option value="{{ yardname.id }}">{{ yardname.name }}</option>
+                  {% endfor %}
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="Arrivals" class="form-label">Arrivals</label>
+              <input type="number" class="form-control" id="Arrivals" name="Arrivals" required>
+            </div>
             <button type="submit" class="btn btn-primary w-30"> Predict Prices</button>
           </form>
         </div>

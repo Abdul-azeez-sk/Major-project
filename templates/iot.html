@@ -1,25 +1,27 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container py-1">
+<div class="container">
   <div class="row justify-content-center">
-    <div class="col-md-4 mt-3">
+    <div class="col-md-12 mt-5">
       <div class="card shadow-sm border-0">
         <div class="card-header ">
           <h4 class="mb-0">IoT Dataset Generator</h4>
         </div>
         <div class="card-body">
           <form method="post" action="/generate">
-            <div class="mb-3 w-50">
-              <label for="seeding_date" class="form-label">Seeding Date</label>
-              <input type="date" class="form-control" id="seeding_date" name="seeding_date" 
-                     value="{{ seeding_date or '' }}" required>
-            </div>
+            <div class="row">
+              <div class="mb-3 w-50 col-md-6">
+                <label for="seeding_date" class="form-label">Seeding Date</label>
+                <input type="date" class="form-control" id="seeding_date" name="seeding_date" 
+                      value="{{ seeding_date or '' }}" required>
+              </div>
 
-            <div class="mb-3 w-50">
-              <label for="harvesting_date" class="form-label">Harvesting Date</label>
-              <input type="date" class="form-control" id="harvesting_date" name="harvesting_date" 
-                     value="{{ harvesting_date or '' }}" required>
+              <div class="mb-3 w-50 col-md-6">
+                <label for="harvesting_date" class="form-label">Harvesting Date</label>
+                <input type="date" class="form-control" id="harvesting_date" name="harvesting_date" 
+                      value="{{ harvesting_date or '' }}" required>
+              </div>
             </div>
 
             <div class="mb-3 w-50">
@@ -37,8 +39,11 @@
         </div>
       </div>
     </div>
+  </div>
+    </div>
     {% if table %}
-    <div class="col-md-8 mt-3">
+    <div class="row justify-content-center mt-3">
+    <div class="col-md-11">
       <div class="card shadow-sm border-0">
         <div class="card-body">
             <div class="table-responsive">
@@ -49,24 +54,25 @@
         </div>
       </div>
     </div>
+    </div>
     {% endif %}
   {% if plot_image %}
-    <div class="row mt-3">
-      <div class="col-md-12">
+    <div class="row justify-content-center mt-3">
+      <div class="col-md-11">
         <div class="card shadow-sm border-0">
           <div class="card-body">
-            <img   style="max-width: 100%;" src="{{ url_for('static', filename=plot_image) }}" alt="IoT Sensor Plot" />
+            <img   style="max-width: 100%; object-fit: cover;object-position: center;overflow: hidden;" src="{{ url_for('static', filename=plot_image) }}" alt="IoT Sensor Plot" />
           </div>
         </div>
       </div>
     </div>
     {% for i in range(1, 5) %}
-      <div class="row mt-3">
-        <div class="col-md-12">
+      <div class="row justify-content-center mt-3">
+        <div class="col-md-11">
           <div class="card shadow-sm border-0">
             <div class="card-body">
               <div style="max-width: 100%; height:auto;max-height: 800px; overflow: auto;">
-                <img src="{{ url_for('static', filename=i ~ '.png') }}" alt="IoT Sensor Plot {{ i }}" style="width: auto; height: auto; max-width: none;" />
+                <img style="max-width: 100%; object-fit: cover;object-position: center;overflow: hidden;" src="{{ url_for('static', filename=i ~ '.png') }}" alt="IoT Sensor Plot {{ i }}" style="width: auto; height: auto; max-width: none;" />
               </div>
             </div>
           </div>

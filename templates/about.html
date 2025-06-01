@@ -1,42 +1,91 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container py-4">
-  <div class="text-center mb-4">
-    <h2 class="fw-bold" style="color:  #70b9fc; ">Smart Harvest Xpert</h2>
-    <p class="lead text-muted">
-      Empowering Farmers with Data-Driven Harvest Decisions
-    </p>
+<style>
+  /* Custom theme colors */
+  :root {
+    --primary-color: #70b9fc;
+    --secondary-color: #4a90e2;
+    --text-color: #343a40;
+    --card-bg: #ffffff;
+    --card-shadow: rgba(0, 0, 0, 0.1);
+  }
+
+  h2.custom-title {
+    color: var(--primary-color);
+    font-weight: 700;
+  }
+
+  h4.section-title {
+    color: var(--secondary-color);
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  p, ul {
+    color: var(--text-color);
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  ul li {
+    margin-bottom: 0.5rem;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border: none;
+    box-shadow: 0 4px 12px var(--card-shadow);
+    border-radius: 0.75rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .lead.text-muted {
+    color: #6c757d;
+    font-weight: 400;
+    font-size: 1.1rem;
+  }
+</style>
+
+<div class="container py-5">
+  <div class="text-center mb-5">
+    <h2 class="custom-title">Smart Harvest Xpert</h2>
+    <p class="lead text-muted">Empowering Farmers with Data-Driven Harvest Decisions</p>
   </div>
 
-  <!-- Section: Introduction -->
-  <div class="card mb-4 shadow-sm border-0">
+  <!-- Sections -->
+  <div class="card mb-4 shadow-sm">
     <div class="card-body">
-      <h4 class="card-title " style="color: lightblue;">Introduction</h4>
-      <p class="card-text">
+      <h4 class="section-title">Introduction</h4>
+      <p>
         Agriculture is one of the most crucial industries, yet farmers often face challenges in determining the best time to harvest their crops for maximum profit. This project integrates machine learning, IoT-based real-time sensor data, and predictive analytics to help farmers optimize their harvesting window while maximizing revenue by forecasting market price trends.
       </p>
     </div>
   </div>
 
-  <!-- Section: Project Overview -->
-  <div class="card mb-4 shadow-sm border-0">
+  <div class="card mb-4 shadow-sm">
     <div class="card-body">
-      <h4 class="card-title " style="color: lightblue;">Project Overview</h4>
+      <h4 class="section-title">Project Overview</h4>
       <p>The project focuses on three key components:</p>
       <ul>
         <li>Price Trend Prediction using Machine Learning</li>
         <li>Strategic Harvesting Window Optimization</li>
         <li>Real-Time Sensor Monitoring through IoT</li>
       </ul>
-      <p>These components work together to enhance decision-making, ensuring crops are harvested at the right time while maintaining quality and profitability.</p>
+      <p>
+        These components work together to enhance decision-making, ensuring crops are harvested at the right time while maintaining quality and profitability.
+      </p>
     </div>
   </div>
 
-  <!-- Section: Price Trend Prediction -->
-  <div class="card mb-4 shadow-sm border-0">
+  <div class="card mb-4 shadow-sm">
     <div class="card-body">
-      <h4 class="card-title " style="color: lightblue;">1. Price Trend Prediction using Machine Learning</h4>
+      <h4 class="section-title">1. Price Trend Prediction using Machine Learning</h4>
       <p>Market price fluctuations significantly impact farmers' income. To address this, we use models that consider:</p>
       <ul>
         <li>Historical market prices</li>
@@ -54,10 +103,9 @@
     </div>
   </div>
 
-  <!-- Section: Harvest Window Optimization -->
-  <div class="card mb-4 shadow-sm border-0">
+  <div class="card mb-4 shadow-sm">
     <div class="card-body">
-      <h4 class="card-title " style="color: lightblue;">2. Harvest Window Optimization</h4>
+      <h4 class="section-title">2. Harvest Window Optimization</h4>
       <p>Harvest time depends on:</p>
       <ul>
         <li>Market price trends</li>
@@ -75,10 +123,9 @@
     </div>
   </div>
 
-  <!-- Section: IoT Monitoring -->
-  <div class="card mb-4 shadow-sm border-0">
+  <div class="card mb-4 shadow-sm">
     <div class="card-body">
-      <h4 class="card-title " style="color: lightblue;">3. IoT-Based Real-Time Sensor Signaling</h4>
+      <h4 class="section-title">3. IoT-Based Real-Time Sensor Signaling</h4>
       <p>Monitors and uploads real-time data such as:</p>
       <ul>
         <li>Temperature</li>
@@ -94,10 +141,9 @@
     </div>
   </div>
 
-  <!-- Section: Impact -->
-  <div class="card mb-5 shadow-sm border-0">
+  <div class="card mb-5 shadow-sm">
     <div class="card-body">
-      <h4 class="card-title " style="color: lightblue;">Expected Impact</h4>
+      <h4 class="section-title">Expected Impact</h4>
       <ul>
         <li>Increase farmer profits by selling at optimal prices</li>
         <li>Reduce post-harvest wastage</li>

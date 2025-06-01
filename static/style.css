@@ -12,6 +12,10 @@ body {
   padding-bottom: 0.75rem;
   border-radius: 0 0 16px 16px;
 }
+h4{
+  color:  #70b9fc !important;
+  text-align: center;
+}
 
 .navbar-brand {
   font-size: 1.6rem;
@@ -42,6 +46,7 @@ body {
   border-radius: 15px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   margin-bottom: 2rem;
+  text-align: center;
 }
 
 .btn{
