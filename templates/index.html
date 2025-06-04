@@ -28,7 +28,7 @@
               <select class="form-control" id="CommName" name="CommName" required>
                   <option value="">Select a Crop</option>
                   {% for crop in crops %}
-                      <option value="{{ crop.id }}">{{ crop.name }}</option>
+                      <option value="{{ crop }}">{{ crop }}</option>
                   {% endfor %}
               </select>
             </div>
@@ -37,7 +37,7 @@
               <select class="form-control" id="VarityName" name="VarityName" required>
                   <option value="">Select a variety</option>
                   {% for variety in varieties %}
-                      <option value="{{ variety.id }}">{{ variety.name }}</option>
+                      <option value="{{ variety}}">{{ variety}}</option>
                   {% endfor %}
               </select>
             </div>
@@ -46,7 +46,7 @@
               <select class="form-control" id="AmcName" name="AmcName" required>
                   <option value="">Select a Amc</option>
                   {% for amcname in amcnames %}
-                      <option value="{{ amcname.id }}">{{ amcname.name }}</option>
+                      <option value="{{ amcname}}">{{ amcname}}</option>
                   {% endfor %}
               </select>
             </div>
@@ -55,7 +55,7 @@
               <select class="form-control" id="YardName" name="YardName" required>
                   <option value="">Select a Yard</option>
                   {% for yardname in yardnames %}
-                      <option value="{{ yardname.id }}">{{ yardname.name }}</option>
+                      <option value="{{ yardname }}">{{ yardname }}</option>
                   {% endfor %}
               </select>
             </div>
@@ -70,8 +70,25 @@
     </div>
   </div>
 </div>
-
-
+{% if predictions %}
+  <h3 class="mt-4">Prediction Results</h3>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Predicted Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for pred in predictions %}
+        <tr>
+          <td>{{ pred.Date }}</td>
+          <td>{{ pred.Predicted_Price }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endif %}
 
 {% endblock %}
 

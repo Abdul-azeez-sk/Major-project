@@ -82,5 +82,13 @@
   {% endif %}
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const form = document.querySelector('form');
+  const submitBtn = form.querySelector('button[type="submit"]');
 
+  form.addEventListener('submit', function() {
+    submitBtn.disabled = true;
+    submitBtn.innerText = 'Generating...';
+  });
+</script>
 {% endblock %}

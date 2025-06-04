@@ -1,5 +1,5 @@
 from flask import Flask,render_template,jsonify,request, send_file
-import pickle
+import dill as pickle
 import numpy as np
 from model.model2.IotSIm import generate_hourly_data
 app = Flask(__name__) 
@@ -10,6 +10,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import matplotlib.dates as mdates
 import seaborn as sns
+from datetime import datetime, timedelta
+
 
 
 def plot_iot_data(df: pd.DataFrame, save_path):
@@ -88,7 +90,7 @@ def iot_data(df: pd.DataFrame):
     
 @app.route("/") 
 def home():
-    return render_template('index.html')
+    return render_template('index.html', amcnames = amc_name_to_code , yardnames = yard_name_to_code , varieties = varity_name_to_code , crops = comm_name_to_code)
 
 @app.route("/iot")
 def iot():
@@ -126,12 +128,112 @@ def generate():
     return render_template("iot.html", table=table_html, seeding_date=seeding_date,harvesting_date=harvesting_date,crop_id=crop_id,plot_image="iot_sensor_plot.png")
 
 
+
+amc_name_to_code = {
+ 'Chevella': 322,
+ 'Ibrahimpatnam(RR)': 313,
+ 'Shadnagar': 310,
+ 'Hyderabad': 325,
+ 'Sangareddy': 295,
+ 'Kalwakurthy': 303,
+ 'Gudimalkapur': 367,
+ 'Vantimamidi': 331,
+ 'Bowenpally': 324,
+ 'Shankerpally': 319,
+ 'Warangal': 246,
+ 'Gaddiannaram': 323,
+ 'Venkateshwar Nagar': 281,
+ 'Khammam': 256,
+ 'Jainath': 192,
+ 'Patancheru': 361,
+ 'Gajwel': 283,
+ 'Madnoor': 207
+}
+
+yard_name_to_code = {
+ 'Chevella': 46,
+ 'Ibrahimpatnam': 42,
+ 'Shadnagar': 1330,
+ 'Meeralamandi': 7,
+ 'Madannapeta': 6,
+ 'Sangaredy': 1219,
+ 'Kalwakurthy': 1340,
+ 'Gudumalkapur': 1571,
+ 'Vantimamidi': 1612,
+ 'Bowenpally': 3,
+ 'Shankerpally': 40,
+ 'Warangal': 886,
+ 'L.B Nagar': 2,
+ 'V Nagar': 1106,
+ 'Khammam': 1067,
+ 'Jainath': 26,
+ 'Patancheru': 1613,
+ 'Gajwel': 1201,
+ 'Madnoor': 1083
+}
+varity_name_to_code = {'Local': 197, 'Common': 114, '618': 210, 'Hybrid': 198}
+comm_name_to_code = {'Tomato': 114, 'Potato': 115}
+
+
 @app.route("/predict", methods=["POST"])
 def predict():
     data = request.form
-    return 
     
+    # Extract input parameters
+    start_date_str = data.get("start_date")
+    stop_date_str = data.get("stop_date")
+    CommName = data.get("CommName")
+    VarityName = data.get("VarityName")
+    AmcName = data.get("AmcName")
+    YardName = data.get("YardName")
+    Arrivals = float(data.get("Arrivals", 0))
 
+    # Convert dates to datetime objects
+    start_date = datetime.strptime(start_date_str, "%Y-%m-%d")
+    stop_date = datetime.strptime(stop_date_str, "%Y-%m-%d")
+
+    # Load the model
+    with open("model/model1/smooth_mock_price_model.pkl", "rb") as f:
+        model = pickle.load(f)
+    
+    # Prepare dataframe for each date in range
+    df_list = []
+    current_date = start_date
+    while current_date <= stop_date:
+        df_list.append({
+            'AmcCode': amc_name_to_code.get(AmcName, 0),
+            'YardCode': yard_name_to_code.get(YardName, 0),
+            'VarityCode': varity_name_to_code.get(VarityName, 0),
+            'Year': current_date.year,
+            'Month': current_date.month,
+            'Day': current_date.day,
+        })
+        current_date += timedelta(days=1)
+    
+    df_test = pd.DataFrame(df_list)
+
+    # Predict
+    preds = model.predict(df_test)
+
+    results = []
+    for i, row in df_test.iterrows():
+       results.append({
+                'Date': f"{row['Year']}-{row['Month']:02d}-{row['Day']:02d}",
+                'Predicted_Price': round(preds[i], 2)  
+        })
+
+    # Render the index.html and pass results to it
+    return render_template(
+    "index.html",
+    predictions=results,
+    start_date=start_date_str,
+    stop_date=stop_date_str,
+    CommName=CommName,
+    VarityName=VarityName,
+    AmcName=AmcName,
+    YardName=YardName,
+    Arrivals=Arrivals
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)  
