@@ -11,8 +11,30 @@ import pandas as pd
 import matplotlib.dates as mdates
 import seaborn as sns
 from datetime import datetime, timedelta
+import hashlib
 
+class SmoothMockPriceModel:
+    def predict(self, X):
+        if not isinstance(X, pd.DataFrame):
+            X = pd.DataFrame(X)
 
+        def row_to_val(row):
+            base_key = f"{row['AmcCode']}_{row['YardCode']}_{row['VarityCode']}"
+            base_hash = int(hashlib.md5(base_key.encode()).hexdigest()[:8], 16)
+            base_price = 1000 + (base_hash % 800)
+
+            date = pd.Timestamp(year=row['Year'], month=row['Month'], day=row['Day'])
+            day_of_year = date.dayofyear
+            variation = 100 * np.sin(2 * np.pi * day_of_year / 30)
+
+            price = base_price + variation
+            return round(price, 2)
+
+        preds = X.apply(row_to_val, axis=1)
+        return preds.values
+
+# Create model instance
+model = SmoothMockPriceModel()
 
 def plot_iot_data(df: pd.DataFrame, save_path):
     # Combine Date and Hour into a datetime object instead of string concatenation
@@ -120,7 +142,7 @@ def generate():
     table_html = df.to_html(classes='iot-table', index=False)
     print(df.columns.tolist())
      
-    plot_iot_data( df , save_path='static/iot_sensor_plot.png')
+    plot_iot_data(df , save_path='static/iot_sensor_plot.png')
     iot_data(df)
     file_path = "static/tomato_data.csv"
     df.to_csv(file_path, index=False)
@@ -222,7 +244,6 @@ def predict():
                 'Predicted_Price': round(preds[i], 2)  
         })
 
-    # Render the index.html and pass results to it
     return render_template(
     "index.html",
     predictions=results,
@@ -236,4 +257,5 @@ def predict():
     )
 
 if __name__ == "__main__":
-    app.run(debug=True)  
+    port = int(os.environ.get("PORT", 5000))
+    app.run(debug=True, host='0.0.0.0', port=port)  
