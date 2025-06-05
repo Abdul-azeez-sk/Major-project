@@ -72,12 +72,12 @@
 </div>
 {% if predictions %}
     <div class="row justify-content-center mt-3">
-    <div class="col-md-10">
+    <div class="col-md-8">
       <div class="card shadow-sm border-0">
         <div class="card-body">
           <h3 class="mt-3">Prediction Results</h3>
-            <div class="table-responsive">
-              {{ pred |safe }}
+            <div class="table-responsive iot-table">
+              {{ predictions |safe }}
             </div>
           </div>
         </div>

@@ -33,6 +33,23 @@ document.addEventListener("DOMContentLoaded", function () {
           }
         });
       }
-    }, 100); 
+    }, 10); 
+  });
+
+document.addEventListener("DOMContentLoaded", function () {
+    setTimeout(function () {
+      const $table = $("predictions");
+      if ($table.length) {
+        $table.addClass("table table-bordered table-hover table-striped");
+        $table.DataTable({
+          pageLength: 5,
+          lengthMenu: [5, 10, 25, 50, 100],
+          language: {
+            search: "_INPUT_",
+            searchPlaceholder: "Search records..."
+          }
+        });
+      }
+    }, 10); 
   });
   

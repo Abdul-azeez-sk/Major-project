@@ -1,3 +1,4 @@
+import os
 from flask import Flask,render_template,jsonify,request, send_file
 import numpy as np
 from model.model2.IotSIm import generate_hourly_data
@@ -212,10 +213,6 @@ def predict():
     # Convert dates to datetime objects
     start_date = datetime.strptime(start_date_str, "%Y-%m-%d")
     stop_date = datetime.strptime(stop_date_str, "%Y-%m-%d")
-
-    # Load the model
-    with open("model/model1/smooth_mock_price_model.pkl", "rb") as f:
-        model = pickle.load(f)
     
     # Prepare dataframe for each date in range
     df_list = []
@@ -242,10 +239,12 @@ def predict():
                 'Date': f"{row['Year']}-{row['Month']:02d}-{row['Day']:02d}",
                 'Predicted_Price': round(preds[i], 2)  
         })
-
+    df_results = pd.DataFrame(results)
+    table_html = df_results.to_html(classes='iot-table', index=False)
+    
     return render_template(
     "index.html",
-    predictions=results,
+    predictions=table_html,
     start_date=start_date_str,
     stop_date=stop_date_str,
     CommName=CommName,
