@@ -1,5 +1,4 @@
 from flask import Flask,render_template,jsonify,request, send_file
-import dill as pickle
 import numpy as np
 from model.model2.IotSIm import generate_hourly_data
 app = Flask(__name__) 
