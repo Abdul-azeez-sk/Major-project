@@ -116,7 +116,11 @@ def home():
 
 @app.route("/iot")
 def iot():
-    return render_template('iot.html')
+    seeding_date = request.args.get("seeding_date")
+    harvesting_date = request.args.get("harvesting_date")
+    crop_id = request.args.get("crop_id")
+    return render_template('iot.html', seeding_date=seeding_date, harvesting_date=harvesting_date, crop_id=crop_id ,varieties = varity_name_to_code )
+
 
 @app.route("/about")
 def about():
@@ -124,6 +128,8 @@ def about():
 
 @app.route("/live")
 def live():
+    df = request.args.get("df")
+    
     return render_template('live.html')
 
 
@@ -147,7 +153,7 @@ def generate():
     file_path = "static/tomato_data.csv"
     df.to_csv(file_path, index=False)
     
-    return render_template("iot.html", table=table_html, seeding_date=seeding_date,harvesting_date=harvesting_date,crop_id=crop_id,plot_image="iot_sensor_plot.png")
+    return render_template("iot.html", df=df ,table=table_html, seeding_date=seeding_date,harvesting_date=harvesting_date,crop_id=crop_id,plot_image="iot_sensor_plot.png")
 
 
 
@@ -196,6 +202,23 @@ yard_name_to_code = {
 varity_name_to_code = {'Local': 197, 'Common': 114, '618': 210, 'Hybrid': 198}
 comm_name_to_code = {'Tomato': 114, 'Potato': 115}
 
+def highestInRange(df, rangeStart, rangeStop):
+    # Convert range inputs to datetime
+    rangeStart = pd.to_datetime(rangeStart)
+    rangeStop = pd.to_datetime(rangeStop)
+
+    # Convert first column (assumed date) to datetime
+    df.iloc[:, 0] = pd.to_datetime(df.iloc[:, 0])
+
+    # Filter rows where date is within range
+    filtered = df[(df.iloc[:, 0] > rangeStart) & (df.iloc[:, 0] < rangeStop)]
+
+    if filtered.empty:
+        return [0, None]
+
+    # Find the row with the max profit (assumed to be second column)
+    max_row = filtered.loc[filtered.iloc[:, 1].idxmax()]
+    return [max_row.iloc[1], max_row.iloc[0]]
 
 @app.route("/predict", methods=["POST"])
 def predict():
@@ -241,7 +264,7 @@ def predict():
         })
     df_results = pd.DataFrame(results)
     table_html = df_results.to_html(classes='iot-table', index=False)
-    
+    [maxProfit, maxProfitDate] = highestInRange(df_results, start_date + pd.Timedelta(days=30), start_date + pd.Timedelta(days=50))
     return render_template(
     "index.html",
     predictions=table_html,
@@ -251,7 +274,13 @@ def predict():
     VarityName=VarityName,
     AmcName=AmcName,
     YardName=YardName,
-    Arrivals=Arrivals
+    Arrivals=Arrivals,
+    maxProfit = maxProfit,
+    maxProfitDate = maxProfitDate,
+    amcnames = amc_name_to_code , 
+    yardnames = yard_name_to_code , 
+    varieties = varity_name_to_code ,
+    crops = comm_name_to_code
     )
 
 if __name__ == "__main__":

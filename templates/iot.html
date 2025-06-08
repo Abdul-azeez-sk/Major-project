@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container">
+<div>
   <div class="row justify-content-center">
-    <div class="col-md-12 mt-5">
-      <div class="card shadow-sm border-0">
+    <div class="col-md-8 mt-5">
+      <div class="card ">
         <div class="card-header ">
           <h4 class="mb-0">IoT Dataset Generator</h4>
         </div>
@@ -27,10 +27,9 @@
             <div class="mb-3 w-50">
                 <label for="crop_id" class="form-label">Crop Type</label>
                 <select class="form-control" id="crop_id" name="crop_id" required>
-                    <option value="">Select a crop</option>
-                    <option value="1" {% if crop_id == '1' %}selected{% endif %}>Tomato Common</option>
-                    <option value="2" {% if crop_id == '2' %}selected{% endif %}>Onion</option>
-                    <option value="3" {% if crop_id == '3' %}selected{% endif %}>Potato</option>
+                  {% for variety in varieties %}
+                    <option value="{{ variety }}" {% if crop_id == variety %}selected{% endif %}>{{ variety }}</option>
+                  {% endfor %}               
                 </select>
             </div>
 
@@ -43,13 +42,15 @@
     </div>
     {% if table %}
     <div class="row justify-content-center mt-3">
-    <div class="col-md-11">
-      <div class="card shadow-sm border-0">
+    <div class="col-md-8">
+      <div class="card ">
         <div class="card-body">
             <div class="table-responsive">
               {{ table|safe }}
             </div>
             <a href="static/tomato_data.csv" class="btn btn-success mt-3" download>Download CSV</a>
+            <a href="{{ url_for('live', df = df ) }}" class="btn btn-success mt-3">Generate IoT</a>
+
           </div>
         </div>
       </div>
@@ -58,8 +59,8 @@
     {% endif %}
   {% if plot_image %}
     <div class="row justify-content-center mt-3">
-      <div class="col-md-11">
-        <div class="card shadow-sm border-0">
+      <div class="col-md-8">
+        <div class="card ">
           <div class="card-body">
             <img   style="max-width: 100%; object-fit: cover;object-position: center;overflow: hidden;" src="{{ url_for('static', filename=plot_image) }}" alt="IoT Sensor Plot" />
           </div>
@@ -68,8 +69,8 @@
     </div>
     {% for i in range(1, 5) %}
       <div class="row justify-content-center mt-3">
-        <div class="col-md-11">
-          <div class="card shadow-sm border-0">
+        <div class="col-md-8">
+          <div class="card ">
             <div class="card-body">
               <div style="max-width: 100%; height:auto;max-height: 800px; overflow: auto;">
                 <img style="max-width: 100%; object-fit: cover;object-position: center;overflow: hidden;" src="{{ url_for('static', filename=i ~ '.png') }}" alt="IoT Sensor Plot {{ i }}" style="width: auto; height: auto; max-width: none;" />

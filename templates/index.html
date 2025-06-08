@@ -2,24 +2,26 @@
 
 {% block content %}   
 
-<div class="container mt-5">
-  <div class="row justify-content-center">
-    <div class="col-md-12">
-      <div class="card  shadow-sm border-0">
+
+  <div class="row mt-3 justify-content-center">
+    <div class="col-md-8">
+      <div class="card ">
         <div class="card-header ">
-          <h4 class="mb-0 ">Tomato Price Prediction</h4>
+          <h4 class="mb-0 justify-content-center ">Tomato Price Prediction</h4>
         </div>
         <div class="card-body ">
           <form method="post" action="/predict">
             <div class="row mt-3">
               <div class="mb-3 col-md-6">
                 <label for="start_date" class="form-label"> Prediction Start</label>
-                <input type="date" class="form-control" id="start_date" name="start_date" required>
+                <input type="date" class="form-control" id="start_date" name="start_date" 
+                value="{{ start_date or '' }}" required>
               </div>
 
               <div class="mb-3 col-md-6">
                 <label for="stop_date" class="form-label"> Prediction Stop</label>
-                <input type="date" class="form-control" id="stop_date" name="stop_date" required>
+                <input type="date" class="form-control" id="stop_date" name="stop_date" 
+                value="{{ stop_date or '' }}" required>
               </div>
             </div>
 
@@ -28,16 +30,16 @@
               <select class="form-control" id="CommName" name="CommName" required>
                   <option value="">Select a Crop</option>
                   {% for crop in crops %}
-                      <option value="{{ crop }}">{{ crop }}</option>
+                    <option value="{{ crop }}" {% if CommName == crop %}selected{% endif %}>{{ crop }}</option>
                   {% endfor %}
               </select>
             </div>
             <div class="mb-3">
               <label for="VarityName" class="form-label">Variety</label>
-              <select class="form-control" id="VarityName" name="VarityName" required>
+              <select class="form-control" id="VarityName" name="VarityName"  required>
                   <option value="">Select a variety</option>
                   {% for variety in varieties %}
-                      <option value="{{ variety}}">{{ variety}}</option>
+                    <option value="{{ variety }}" {% if VarietyName == variety %}selected{% endif %}>{{ variety }}</option>
                   {% endfor %}
               </select>
             </div>
@@ -46,22 +48,23 @@
               <select class="form-control" id="AmcName" name="AmcName" required>
                   <option value="">Select a Amc</option>
                   {% for amcname in amcnames %}
-                      <option value="{{ amcname}}">{{ amcname}}</option>
+                    <option value="{{ amcname }}" {% if AmcName == amcname %}selected{% endif %}>{{ amcname }}</option>
                   {% endfor %}
               </select>
             </div>
-            <div class="mb-3">
+           <div class="mb-3">
               <label for="YardName" class="form-label">Yard Name</label>
               <select class="form-control" id="YardName" name="YardName" required>
-                  <option value="">Select a Yard</option>
-                  {% for yardname in yardnames %}
-                      <option value="{{ yardname }}">{{ yardname }}</option>
-                  {% endfor %}
+                <option value="">Select a Yard</option>
+                {% for yardname in yardnames %}
+                  <option value="{{ yardname }}" {% if YardName == yardname %}selected{% endif %}>{{ yardname }}</option>
+                {% endfor %}
               </select>
             </div>
             <div class="mb-3">
               <label for="Arrivals" class="form-label">Arrivals</label>
-              <input type="number" class="form-control" id="Arrivals" name="Arrivals" required>
+              <input type="number" class="form-control" id="Arrivals" name="Arrivals" 
+              value="{{ Arrivals or '' }}" required>
             </div>
             <button type="submit" class="btn btn-primary w-30"> Predict Prices</button>
           </form>
@@ -69,21 +72,61 @@
       </div>
     </div>
   </div>
-</div>
+
 {% if predictions %}
     <div class="row justify-content-center mt-3">
-    <div class="col-md-8">
-      <div class="card shadow-sm border-0">
-        <div class="card-body">
-          <h3 class="mt-3">Prediction Results</h3>
-            <div class="table-responsive iot-table">
-              {{ predictions |safe }}
+      <div class="col-md-8">
+        <div class="card ">
+          <div class="card-body">
+            <h3 class="mt-3">Prediction Results</h3>
+              <div class="table-responsive iot-table">
+                {{ predictions |safe }}
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <div class="row justify-content-center mt-3">
+      <div class="col-md-8">
+        <div class="card ">
+          <div class="card-body">
+              <a href="{{ url_for('iot', seeding_date=start_date, harvesting_date=maxProfitDate.strftime('%Y-%m-%d'), crop_id=VarityName) }}" class="btn btn-success mt-3">Generate IoT</a>
+          </div>
+        </div>
+      </div>
     </div>
+    <div class="row justify-content-center mt-3">
+      <div class="col-md-8">
+        <div class="card ">
+          <div class="card-body">
+              <h4>
+                📈 Maximum Predicted Profit: <strong>{{ maxProfit }}</strong>  
+                on <strong>{{ maxProfitDate }}</strong>
+              </h4>
+              <br/>
+
+              <h4>
+                📅 Prediction Window:  
+                <strong>{{ start_date }}</strong> to <strong>{{ stop_date }}</strong>
+              </h4>
+              <br/>
+
+              <p>
+                🕒 The prediction range is based on an average tomato crop lifecycle of approximately <strong>40 days</strong>. 
+                This duration allows the model to analyze price trends and market behavior during a full growth cycle.
+              </p>
+
+              <p>
+                ✅ Use this window to make strategic harvesting decisions and maximize profitability.
+                Market predictions take into account seasonal patterns, historical price data, and recent trends.
+              </p>
+          </div>
+        </div>
+      </div>
+    </div>
+        
+    
 {% endif %}
 {% endblock %}
 

@@ -52,4 +52,25 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }, 10); 
   });
+
+const themeToggleBtn = document.getElementById('theme-toggle');
+  
+  function setTheme(theme) {
+    document.documentElement.setAttribute('data-bs-theme', theme);
+    localStorage.setItem('theme', theme);
+    themeToggleBtn.textContent = theme === 'dark' ? '☀️' : '🌙'; // sun for dark mode on (to switch to light), moon for light mode
+    const nav = document.getElementById('navigation'); // Make sure your <nav> has id="navigation"
+    nav.style.backgroundColor = '#212529'; // Light blue for light mode
+
+  }
+
+  // Load saved theme or default to dark
+  const savedTheme = localStorage.getItem('theme') || 'dark';
+  setTheme(savedTheme);
+
+  themeToggleBtn.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-bs-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    setTheme(newTheme);
+  });
   
